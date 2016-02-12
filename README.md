@@ -11,7 +11,7 @@ ESLint rule for suggesting that [object spread properties](https://github.com/se
 Install [ESLint](http://eslint.org) and `eslint-plugin-prefer-object-spread`:
 
 ```
-$ npm install eslint eslint-plugin-prefer-object-spread --save-dev
+$ npm install --save-dev eslint eslint-plugin-prefer-object-spread
 ```
 
 ## Usage
