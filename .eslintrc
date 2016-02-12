@@ -1,0 +1,10 @@
+{
+	"extends": "@bryanrsmith/eslint-config-standard",
+	"env": {
+		"es6": true,
+		"node": true
+	},
+	"ecmaFeatures": {
+		"modules": true
+	}
+}
