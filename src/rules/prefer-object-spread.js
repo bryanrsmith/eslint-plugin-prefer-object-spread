@@ -12,7 +12,12 @@ export default function preferObjectSpreadRule(context) {
 			let isCloneOperation = args.length
 				&& args[0].type === 'ObjectExpression';
 
-			if (isObjectAssign && (isCloneOperation || !cloneOnly)) {
+			// Object spread can't be used when passing a spread element to Object.assign()
+			// E.g., Object.assign(...a)
+			let hasSpreadElement = args.length
+				&& args.some(x => x.type === 'SpreadElement');
+
+			if (isObjectAssign && !hasSpreadElement && (isCloneOperation || !cloneOnly)) {
 				context.report(node, 'Use a spread property instead of Object.assign().');
 			}
 		},

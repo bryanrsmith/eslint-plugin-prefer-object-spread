@@ -11,6 +11,7 @@ ruleTester.run('prefer-object-spread', rule, {
 		'let a = Object.assign(a, b)',
 		'let a = Object.assign(b, { c: 1 })',
 		{ code: 'let a = Object.assign(a, b)', options: [ 'only-clone' ]},
+		'let a = Object.assign({}, ...b)',
 	],
 	invalid: [
 		{
