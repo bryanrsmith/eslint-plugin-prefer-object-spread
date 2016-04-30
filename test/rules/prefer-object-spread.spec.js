@@ -1,8 +1,8 @@
 import eslint from 'eslint';
 import plugin from '../../src';
 
-let rule = plugin.rules['prefer-object-spread'];
-let ruleTester = new eslint.RuleTester({ env: { es6: true }, ecmaFeatures: { experimentalObjectRestSpread: true }});
+const rule = plugin.rules['prefer-object-spread'];
+const ruleTester = new eslint.RuleTester({ parserOptions: { ecmaVersion: 6, ecmaFeatures: { experimentalObjectRestSpread: true }}});
 
 ruleTester.run('prefer-object-spread', rule, {
 	valid: [
@@ -10,7 +10,7 @@ ruleTester.run('prefer-object-spread', rule, {
 		'Object.assign()',
 		'let a = Object.assign(a, b)',
 		'let a = Object.assign(b, { c: 1 })',
-		{ code: 'let a = Object.assign(a, b)', options: [ 'only-clone' ]},
+		{ code: 'let a = Object.assign(a, b)', options: [ 'only-clone' ] },
 		'let a = Object.assign({}, ...b)',
 	],
 	invalid: [
