@@ -39,7 +39,7 @@
     "babel-cli": "6.9.0",
     "babel-preset-es2015": "6.9.0",
     "babel-preset-stage-1": "6.5.0",
-    "babel-register": "6.11.5",
+    "babel-register": "6.14.0",
     "coveralls": "2.11.11",
     "eslint": "^3.0.1",
     "isparta": "4.0.0",
