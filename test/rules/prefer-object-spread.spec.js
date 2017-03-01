@@ -16,7 +16,7 @@ ruleTester.run('prefer-object-spread', rule, {
 	invalid: [
 		{
 			code: 'let a = Object.assign({})',
-			output: 'let a = ({...({})})',
+			output: 'let a = ({})',
 			errors: [
 				{
 					message: 'Use a spread property instead of Object.assign().',
@@ -26,7 +26,7 @@ ruleTester.run('prefer-object-spread', rule, {
 		},
 		{
 			code: 'let a = Object.assign({}, a)',
-			output: 'let a = ({...({}), ...(a)})',
+			output: 'let a = ({...(a)})',
 			errors: [
 				{
 					message: 'Use a spread property instead of Object.assign().',
@@ -68,7 +68,7 @@ ruleTester.run('prefer-object-spread', rule, {
 		},
 		{
 			code: 'Object.assign(  {},  a,      b,   )',
-			output: '({  ...({}),  ...(a),      ...(b),   })',
+			output: '({  ...(a),      ...(b),   })',
 			errors: [
 				{
 					message: 'Use a spread property instead of Object.assign().',

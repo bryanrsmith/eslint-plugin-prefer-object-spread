@@ -9,6 +9,9 @@ function createFix(node, sourceCode) {
 		const args = node.arguments;
 
 		function processArg(n, i) {
+			if (n.type === 'ObjectExpression' && n.properties.length === 0) {
+				return '';
+			}
 			const next = args[i + 1] || {};
 			const currentArg = `...(${sourceCode.getText(n)})`;
 			if (next.start) {
