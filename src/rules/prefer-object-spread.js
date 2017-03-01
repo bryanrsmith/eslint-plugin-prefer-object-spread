@@ -1,12 +1,34 @@
 const message = 'Use a spread property instead of Object.assign().';
 
+function tail(arr) {
+	return arr.slice(-1)[0];
+}
+
 function createFix(node, sourceCode) {
 	function fix(fixer) {
-		const args = node
-			.arguments
-			.map(n => `...(${sourceCode.getText(n)})`)
-			.join();
-		return fixer.replaceText(node, `({${args}})`);
+		const args = node.arguments;
+
+		function processArg(n, i) {
+			const next = args[i + 1] || {};
+			const currentArg = `...(${sourceCode.getText(n)})`;
+			if (next.start) {
+				return currentArg + sourceCode.text.slice(n.end, next.start);
+			}
+			return currentArg;
+		}
+
+		const processedArgs = args.map(processArg).join('');
+		const lastArg = tail(args);
+		const firstArg = args[0];
+		const funcEnd = sourceCode
+      .text
+      .slice(lastArg.end, node.end)
+      .split(')')[0];
+		const funcStart = tail(sourceCode
+      .text
+      .slice(node.start, firstArg.start)
+      .split('('));
+		return fixer.replaceText(node, `({${funcStart}${processedArgs}${funcEnd}})`);
 	}
 
 	return fix;
