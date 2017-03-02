@@ -13,7 +13,7 @@ function createFix(node, sourceCode) {
 				return '';
 			}
 			const next = args[i + 1] || {};
-			const currentArg = `...(${sourceCode.getText(n)})`;
+			const currentArg = `...${sourceCode.getText(n)}`;
 			if (next.start) {
 				return currentArg + sourceCode.text.slice(n.end, next.start);
 			}
