@@ -23,14 +23,8 @@ function createFix(node, sourceCode) {
 		const processedArgs = args.map(processArg).join('');
 		const lastArg = tail(args);
 		const firstArg = args[0];
-		const funcEnd = sourceCode
-      .text
-      .slice(lastArg.end, node.end)
-      .split(')')[0];
-		const funcStart = tail(sourceCode
-      .text
-      .slice(node.start, firstArg.start)
-      .split('('));
+		const funcEnd = sourceCode.text.slice(lastArg.end, node.end).split(')')[0];
+		const funcStart = tail(sourceCode.text.slice(node.start, firstArg.start).split('('));
 		return fixer.replaceText(node, `({${funcStart}${processedArgs}${funcEnd}})`);
 	}
 
@@ -51,20 +45,19 @@ export default {
 		const sourceCode = context.getSourceCode();
 
 		return {
-			'CallExpression'(node) {
+			CallExpression(node) {
 				const { callee, arguments: args } = node;
 
-				const isObjectAssign = callee.type === 'MemberExpression'
-					&& callee.object.name === 'Object'
-					&& callee.property.name === 'assign';
+				const isObjectAssign =
+					callee.type === 'MemberExpression' &&
+					callee.object.name === 'Object' &&
+					callee.property.name === 'assign';
 
-				const isCloneOperation = args.length
-					&& args[0].type === 'ObjectExpression';
+				const isCloneOperation = args.length && args[0].type === 'ObjectExpression';
 
 				// Object spread can't be used when passing a spread element to Object.assign()
 				// E.g., Object.assign(...a)
-				const hasSpreadElement = args.length
-					&& args.some(x => x.type === 'SpreadElement');
+				const hasSpreadElement = args.length && args.some(x => x.type === 'SpreadElement');
 
 				if (isObjectAssign && !hasSpreadElement && (isCloneOperation || !cloneOnly)) {
 					context.report({ node, message, fix: createFix(node, sourceCode) });

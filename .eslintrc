@@ -1,5 +1,8 @@
 {
-	"extends": "@bryanrsmith/eslint-config-standard",
+	"extends": [
+		"@bryanrsmith/eslint-config-standard",
+		"prettier"
+	],
 	"env": {
 		"es6": true,
 		"node": true

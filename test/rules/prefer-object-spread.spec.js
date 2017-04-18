@@ -2,7 +2,9 @@ import eslint from 'eslint';
 import plugin from '../../src';
 
 const rule = plugin.rules['prefer-object-spread'];
-const ruleTester = new eslint.RuleTester({ parserOptions: { ecmaVersion: 8, ecmaFeatures: { experimentalObjectRestSpread: true }}});
+const ruleTester = new eslint.RuleTester({
+	parserOptions: { ecmaVersion: 8, ecmaFeatures: { experimentalObjectRestSpread: true } },
+});
 
 ruleTester.run('prefer-object-spread', rule, {
 	valid: [
@@ -10,7 +12,7 @@ ruleTester.run('prefer-object-spread', rule, {
 		'Object.assign()',
 		'let a = Object.assign(a, b)',
 		'let a = Object.assign(b, { c: 1 })',
-		{ code: 'let a = Object.assign(a, b)', options: [ 'only-clone' ] },
+		{ code: 'let a = Object.assign(a, b)', options: ['only-clone'] },
 		'let a = Object.assign({}, ...b)',
 	],
 	invalid: [
@@ -47,7 +49,7 @@ ruleTester.run('prefer-object-spread', rule, {
 		{
 			code: 'let a = Object.assign(a, b)',
 			output: 'let a = ({...a, ...b})',
-			options: [ 'always' ],
+			options: ['always'],
 			errors: [
 				{
 					message: 'Use a spread property instead of Object.assign().',
@@ -58,7 +60,7 @@ ruleTester.run('prefer-object-spread', rule, {
 		{
 			code: 'Object.assign(a, b)',
 			output: '({...a, ...b})',
-			options: [ 'always' ],
+			options: ['always'],
 			errors: [
 				{
 					message: 'Use a spread property instead of Object.assign().',

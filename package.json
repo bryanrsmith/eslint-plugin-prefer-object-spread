@@ -26,11 +26,19 @@
     "test": "NODE_ENV=test nyc --reporter=lcov --reporter=text mocha test/**/*.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint src/ test/",
+    "prettier": "yarn run prettier-core \"{{src,test}/*.js,{src,test}/**/*.js}\"",
+    "prettier-core": "prettier --print-width 100 --use-tabs --trailing-comma es5 --single-quote --write",
     "patch": "release patch",
     "minor": "release minor",
-    "major": "release major"
+    "major": "release major",
+    "precommit": "lint-staged"
   },
-  "dependencies": {},
+  "lint-staged": {
+    "*.js": [
+      "prettier-core",
+      "git add"
+    ]
+  },
   "peerDependencies": {
     "eslint": ">=0.8.0"
   },
@@ -42,8 +50,12 @@
     "babel-register": "^6.24.1",
     "coveralls": "^2.13.0",
     "eslint": "^3.0.1",
+    "eslint-config-prettier": "^1.6.0",
+    "husky": "^0.13.3",
+    "lint-staged": "^3.4.0",
     "mocha": "^3.0.2",
     "nyc": "^10.1.2",
+    "prettier": "^1.1.0",
     "release-script": "1.0.2"
   },
   "engines": {
